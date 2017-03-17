@@ -8,7 +8,7 @@ import (
 func main() {
 	fmt.Printf("You are on Git Quest!\n")
 
-	l := levels.LevelOne{}
+	l := levels.Level{Command: "git", Args: []string{"rev-parse", "--git-dir"}}
 
 	_, message := l.Check()
 

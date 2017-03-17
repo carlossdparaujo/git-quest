@@ -2,18 +2,19 @@ package levels
 
 import (
 	"os/exec"
-	"strings"
 )
 
-type LevelOne struct {
+type Level struct {
+	Command string
+	Args []string
 }
 
-func (l LevelOne) Check() (result bool, output string) {
-	out, err := exec.Command("git", "rev-parse", "--git-dir").CombinedOutput()
+func (l Level) Check() (result bool, output string) {
+	out, err := exec.Command(l.Command, l.Args...).CombinedOutput()
 
 	message := string(out)
 
-	if err != nil || strings.Contains(message, "Not a git repository") {
+	if err != nil {
         return false, message
     }
 
