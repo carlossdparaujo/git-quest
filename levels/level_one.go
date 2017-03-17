@@ -1,22 +1,22 @@
-package main
+package levels
 
 import (
-	"fmt"
+	"os/exec"
 	"strings"
-    "os/exec"
 )
 
-func main() {
-	fmt.Printf("You are on Git Quest!\n")
+type LevelOne struct {
+}
 
+func (l LevelOne) Check() (result bool, output string) {
 	out, err := exec.Command("git", "rev-parse", "--git-dir").CombinedOutput()
 
 	message := string(out)
 
 	if err != nil || strings.Contains(message, "Not a git repository") {
-        fmt.Printf("%s", message)
-        return
+        return false, message
     }
 
-    fmt.Printf("You completed level 1!\n")
+    return true, "You completed level 1!"
 }
+
