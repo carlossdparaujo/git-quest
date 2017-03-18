@@ -6,8 +6,6 @@ import (
   	"errors"
 )
 
-var quest Quest
-
 type mockedExecutor struct {
 	output string
 	err error
@@ -20,7 +18,7 @@ func (m mockedExecutor) Execute(command string, args []string) (out string, err 
 func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {
 	completionMessage := "You completed the quest!"
 
-	quest := Quest{
+	quest := quest{
 		completionMessage,
 		"command", 
 		[]string{"args"}, 
@@ -35,7 +33,7 @@ func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {
 func TestReturnsFalseAndOutputMessageOnFailure(t *testing.T) {
 	output := "Failure output :("
 
-	quest := Quest{
+	quest := quest{
 		"You completed the quest!",
 		"command", 
 		[]string{"args"}, 
