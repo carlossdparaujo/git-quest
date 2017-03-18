@@ -5,19 +5,19 @@ import (
 )
 
 type Quest struct {
-	completionMessage string
-	command string
-	args []string
-	executor executors.Executor
+	CompletionMessage string
+	Command string
+	Args []string
+	Executor executors.Executor
 }
 
 func (q Quest) Check() (bool, string) {
-	output, err := q.executor.Execute(q.command, q.args)
+	output, err := q.Executor.Execute(q.Command, q.Args)
 
 	if (err != nil) {
 		return false, output
 	}
 
-	return true, q.completionMessage	
+	return true, q.CompletionMessage	
 }
 
