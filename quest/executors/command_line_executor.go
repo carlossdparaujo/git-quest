@@ -14,11 +14,7 @@ func NewCommandLineExecutor() commandLineExecutor {
 			return exec.Command(command, args...).CombinedOutput()
 		}
 
-	return NewCustomCommandLineExecutor(runOnCommandLine)
-}
-
-func NewCustomCommandLineExecutor(runCommand runCommand) commandLineExecutor {
-	return commandLineExecutor{runCommand}
+	return commandLineExecutor{runOnCommandLine}
 }
 
 func (c commandLineExecutor) Execute(command string, args []string) (string, error) {
