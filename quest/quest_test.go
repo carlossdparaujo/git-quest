@@ -1,9 +1,9 @@
 package quest
 
 import (
-  "testing"
-  "github.com/stretchr/testify/assert"
-  "errors"
+  	"testing"
+  	"github.com/stretchr/testify/assert"
+  	"errors"
 )
 
 var quest Quest
@@ -13,7 +13,7 @@ type mockedExecutor struct {
 	err error
 }
 
-func (m mockedExecutor) execute(command string, args []string) (out string, err error) {
+func (m mockedExecutor) Execute(command string, args []string) (out string, err error) {
 	return m.output, m.err
 }
 

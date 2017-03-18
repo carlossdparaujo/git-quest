@@ -1,14 +1,18 @@
 package quest
 
+import (
+	"git-quest/quest/executors"
+)
+
 type Quest struct {
 	completionMessage string
 	command string
 	args []string
-	executor Executor
+	executor executors.Executor
 }
 
 func (q Quest) Check() (bool, string) {
-	output, err := q.executor.execute(q.command, q.args)
+	output, err := q.executor.Execute(q.command, q.args)
 
 	if (err != nil) {
 		return false, output
