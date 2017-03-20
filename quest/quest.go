@@ -18,7 +18,11 @@ func (q quest) Description() string {
 	return q.description
 }
 
-func (q quest) Check() (bool, string) {
+func (q quest) Check(command commands.Command) (bool, string) {
+	if (!q.command.Equals(command)) {
+		return false, "Inserted the wrong command"
+	}
+
 	output, err := q.command.Execute()
 
 	if (err != nil) {

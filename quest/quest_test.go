@@ -20,15 +20,40 @@ func (m mockedCommand) Equals(other commands.Command) bool {
 	return true
 }
 
+type mockedDifferentCommand struct {
+}
+
+func (m mockedDifferentCommand) Execute() (out string, err error) {
+	return "", nil
+}
+
+func (m mockedDifferentCommand) Equals(other commands.Command) bool {
+	return false
+}
+
+func TestFailsWhenGivenCommandIfIsNotTheCorrectOne(t *testing.T) {
+	quest := quest{
+		"",
+		"You completed the quest!",
+		mockedDifferentCommand{}}
+
+	command := mockedDifferentCommand{}
+	result, returnedMessage := quest.Check(command)
+
+	assert.False(t, result)
+	assert.Equal(t, "Inserted the wrong command", returnedMessage)
+}
+
 func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {
 	completionMessage := "You completed the quest!"
+	command := mockedCommand{"", nil}
 
 	quest := quest{
 		"",
 		completionMessage,
-		mockedCommand{"Success output", nil}}
+		command}
 
-	result, returnedMessage := quest.Check()
+	result, returnedMessage := quest.Check(command)
 
 	assert.True(t, result)
 	assert.Equal(t, completionMessage, returnedMessage)
@@ -36,13 +61,14 @@ func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {
 
 func TestReturnsFalseAndOutputMessageOnFailure(t *testing.T) {
 	output := "Failure output :("
+	command := mockedCommand{output, errors.New("error string")}
 
 	quest := quest{
 		"",
 		"You completed the quest!",
-		mockedCommand{output, errors.New("error string")}}
+		command}
 
-	result, returnedMessage := quest.Check()
+	result, returnedMessage := quest.Check(command)
 
 	assert.False(t, result)
 	assert.Equal(t, output, returnedMessage)
