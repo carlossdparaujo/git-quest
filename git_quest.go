@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
-	"git-quest/level"
+	"git-quest/quest"
+	"git-quest/quest/commands"
 )
 
 func main() {
 	fmt.Printf("You are on Git Quest!\n")
 
-	l := levels.Level{Command: "git", Args: []string{"rev-parse", "--git-dir"}}
+	command := commands.NewTerminalCommand("git", []string{"rev-parse", "--git-dir"})
+	quest := quest.New("You've completed the quest!", command)
 
-	_, message := l.Check()
-
-	fmt.Printf("%s\n", message);
+	_, message := quest.Check()
+	fmt.Printf("%s\n", message)
 }
