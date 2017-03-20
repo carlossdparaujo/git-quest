@@ -1,6 +1,6 @@
 package comparators
 
-func compareStringArrays(a, b []string) bool {
+func CompareStringArrays(a, b []string) bool {
     if (a == nil && b == nil) {
         return true
     }

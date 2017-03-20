@@ -4,6 +4,7 @@ import (
   	"testing"
   	"github.com/stretchr/testify/assert"
   	"errors"
+  	"git-quest/quest/commands"
 )
 
 type mockedCommand struct {
@@ -13,6 +14,10 @@ type mockedCommand struct {
 
 func (m mockedCommand) Execute() (out string, err error) {
 	return m.output, m.err
+}
+
+func (m mockedCommand) Equals(other commands.Command) bool {
+	return true
 }
 
 func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {

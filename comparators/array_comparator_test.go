@@ -6,21 +6,21 @@ import (
 )
 
 func TestStringArraysAreEqualIfBothAreNil(t *testing.T) {
-	assert.True(t, compareStringArrays(nil, nil))
+	assert.True(t, CompareStringArrays(nil, nil))
 }
 
 func TestStringArraysAreNotEqualIfOnlyOneIsNil(t *testing.T) {
-	assert.False(t, compareStringArrays([]string{}, nil))
+	assert.False(t, CompareStringArrays([]string{}, nil))
 }
 
 func TestStringArraysAreNotEqualIfTheirLengthIsDifferent(t *testing.T) {
-	assert.False(t, compareStringArrays([]string{}, []string{"one-element"}))
+	assert.False(t, CompareStringArrays([]string{}, []string{"one-element"}))
 }
 
 func TestStringArraysAreNotEqualIfTheirElementsDifferent(t *testing.T) {
-	assert.False(t, compareStringArrays([]string{"other-element"}, []string{"one-element"}))
+	assert.False(t, CompareStringArrays([]string{"other-element"}, []string{"one-element"}))
 }
 
 func TestStringArraysAreEqualIfAllElementsAreEqual(t *testing.T) {
-	assert.True(t, compareStringArrays([]string{"1", "2", "3"}, []string{"1", "2", "3"}))
+	assert.True(t, CompareStringArrays([]string{"1", "2", "3"}, []string{"1", "2", "3"}))
 }
