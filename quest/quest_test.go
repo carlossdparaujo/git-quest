@@ -19,6 +19,7 @@ func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {
 	completionMessage := "You completed the quest!"
 
 	quest := quest{
+		"",
 		completionMessage,
 		mockedCommand{"Success output", nil}}
 
@@ -32,6 +33,7 @@ func TestReturnsFalseAndOutputMessageOnFailure(t *testing.T) {
 	output := "Failure output :("
 
 	quest := quest{
+		"",
 		"You completed the quest!",
 		mockedCommand{output, errors.New("error string")}}
 
