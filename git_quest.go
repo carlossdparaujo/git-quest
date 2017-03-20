@@ -10,7 +10,7 @@ func main() {
 	fmt.Printf("You are on Git Quest!\n")
 
 	command := commands.NewTerminalCommand("git", []string{"init"})
-	quest := quest.New("You need to create a git repository!", "You've completed the quest!", command)
+	quest := quest.New("You need to create a git repository!", "You've completed the quest!", command, false)
 
 	fmt.Printf("%s\n", quest.Description())
 

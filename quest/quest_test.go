@@ -35,13 +35,42 @@ func TestFailsWhenGivenCommandIfIsNotTheCorrectOne(t *testing.T) {
 	quest := quest{
 		"",
 		"You completed the quest!",
-		mockedDifferentCommand{}}
+		mockedDifferentCommand{},
+		false}
 
 	command := mockedDifferentCommand{}
 	result, returnedMessage := quest.Check(command)
 
 	assert.False(t, result)
 	assert.Equal(t, "Inserted the wrong command", returnedMessage)
+}
+
+func TestQuestIsCompletedIfCommandSuccessfulyExecuted(t *testing.T) {
+	command := mockedCommand{"", nil}
+
+	quest := quest{
+		"",
+		"",
+		command,
+		false}
+
+	quest.Check(command)
+
+	assert.True(t, quest.Completed())
+}
+
+func TestQuestIsNotCompletedIfCommandIsCorrectButFailed(t *testing.T) {
+	command := mockedCommand{"", errors.New("error string")}
+
+	quest := quest{
+		"",
+		"",
+		command,
+		false}
+
+	quest.Check(command)
+
+	assert.False(t, quest.Completed())
 }
 
 func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {
@@ -51,7 +80,8 @@ func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {
 	quest := quest{
 		"",
 		completionMessage,
-		command}
+		command,
+		false}
 
 	result, returnedMessage := quest.Check(command)
 
@@ -66,7 +96,8 @@ func TestReturnsFalseAndOutputMessageOnFailure(t *testing.T) {
 	quest := quest{
 		"",
 		"You completed the quest!",
-		command}
+		command,
+		false}
 
 	result, returnedMessage := quest.Check(command)
 
