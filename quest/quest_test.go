@@ -11,7 +11,7 @@ type mockedExecutor struct {
 	err error
 }
 
-func (m mockedExecutor) Execute(command string, args []string) (out string, err error) {
+func (m mockedExecutor) Execute() (out string, err error) {
 	return m.output, m.err
 }
 
@@ -20,8 +20,6 @@ func TestReturnsTrueAndCompletionMessageOnSuccess(t *testing.T) {
 
 	quest := quest{
 		completionMessage,
-		"command", 
-		[]string{"args"}, 
 		mockedExecutor{"Success output", nil}}
 
 	result, returnedMessage := quest.Check()
@@ -35,8 +33,6 @@ func TestReturnsFalseAndOutputMessageOnFailure(t *testing.T) {
 
 	quest := quest{
 		"You completed the quest!",
-		"command", 
-		[]string{"args"}, 
 		mockedExecutor{output, errors.New("error string")}}
 
 	result, returnedMessage := quest.Check()

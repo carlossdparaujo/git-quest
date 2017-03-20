@@ -1,4 +1,4 @@
-package executors
+package commands
 
 import (
   	"testing"
@@ -11,9 +11,9 @@ func TestReturnsStringOutput(t *testing.T) {
 		return []byte(output), nil
 	}
 
-	commandLineExecutor := commandLineExecutor{mockedRunner}
+	terminalCommand := terminalCommand{"", []string{}, mockedRunner}
 
-	returnedOutput, err := commandLineExecutor.Execute("", []string{})
+	returnedOutput, err := terminalCommand.Execute()
 
 	assert.Equal(t, output, returnedOutput)
 	assert.Empty(t, err)
@@ -25,9 +25,9 @@ func TestReturnsStringOutputWithoutNewlinesAtTheEnd(t *testing.T) {
 		return []byte(output + "\n"), nil
 	}
 
-	commandLineExecutor := commandLineExecutor{mockedRunner}
+	terminalCommand := terminalCommand{"", []string{}, mockedRunner}
 
-	returnedOutput, err := commandLineExecutor.Execute("", []string{})
+	returnedOutput, err := terminalCommand.Execute()
 
 	assert.Equal(t, output, returnedOutput)
 	assert.Empty(t, err)
@@ -39,9 +39,9 @@ func TestReturnsStringOutputMaintainingNewlinesInTheMiddle(t *testing.T) {
 		return []byte(output + "\n"), nil
 	}
 
-	commandLineExecutor := commandLineExecutor{mockedRunner}
+	terminalCommand := terminalCommand{"", []string{}, mockedRunner}
 
-	returnedOutput, err := commandLineExecutor.Execute("", []string{})
+	returnedOutput, err := terminalCommand.Execute()
 
 	assert.Equal(t, output, returnedOutput)
 	assert.Empty(t, err)
