@@ -31,7 +31,21 @@ func (m mockedDifferentCommand) Equals(other commands.Command) bool {
 	return false
 }
 
-func TestFailsWhenGivenCommandIfIsNotTheCorrectOne(t *testing.T) {
+func TestExecutesCommandEvenIfItsNotTheCorrectOne(t *testing.T) {
+	quest := quest{
+		"",
+		"",
+		mockedDifferentCommand{},
+		false}
+
+	command := mockedDifferentCommand{}
+	result, returnedMessage := quest.Check(command)
+
+	assert.True(t, result)
+	assert.Equal(t, "Inserted the wrong command", returnedMessage)
+}
+
+func TestQuestIsNotCompletedIfWrongCommandExecuted(t *testing.T) {
 	quest := quest{
 		"",
 		"You completed the quest!",
@@ -39,13 +53,12 @@ func TestFailsWhenGivenCommandIfIsNotTheCorrectOne(t *testing.T) {
 		false}
 
 	command := mockedDifferentCommand{}
-	result, returnedMessage := quest.Check(command)
+	quest.Check(command)
 
-	assert.False(t, result)
-	assert.Equal(t, "Inserted the wrong command", returnedMessage)
+	assert.False(t, quest.Completed())
 }
 
-func TestQuestIsCompletedIfCommandSuccessfulyExecuted(t *testing.T) {
+func TestQuestIsCompletedIfCorrectCommandExecuted(t *testing.T) {
 	command := mockedCommand{"", nil}
 
 	quest := quest{
@@ -55,6 +68,23 @@ func TestQuestIsCompletedIfCommandSuccessfulyExecuted(t *testing.T) {
 		false}
 
 	quest.Check(command)
+
+	assert.True(t, quest.Completed())
+}
+
+func TestCompletedQuestCannotBecomeIncomplete(t *testing.T) {
+	command := mockedCommand{"", nil}
+
+	quest := quest{
+		"",
+		"",
+		command,
+		false}
+
+	quest.Check(command)
+
+	differentCommand := mockedDifferentCommand{}
+	quest.Check(differentCommand)
 
 	assert.True(t, quest.Completed())
 }

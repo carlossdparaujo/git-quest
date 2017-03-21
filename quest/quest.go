@@ -24,17 +24,17 @@ func (q quest) Completed() bool {
 }
 
 func (q *quest) Check(command commands.Command) (bool, string) {
-	if (!q.command.Equals(command)) {
-		return false, "Inserted the wrong command"
-	}
-
 	output, err := q.command.Execute()
 
 	if (err != nil) {
 		return false, output
 	}
 
-	q.completed = true
-	return true, q.completionMessage	
+	if (!q.command.Equals(command)) {
+		return true, "Inserted the wrong command"
+	} else {
+		q.completed = true
+		return true, q.completionMessage
+	}
 }
 
