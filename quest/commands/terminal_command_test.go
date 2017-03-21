@@ -16,6 +16,28 @@ func (m mockedCommand) Equals(other Command) bool {
 	return true
 }
 
+func TestCreateFromText(t *testing.T) {
+	command := NewTerminalCommandFromText("git status -s")
+
+	assert.Equal(t, "git", command.command)
+	assert.Equal(t, "status", command.args[0])
+	assert.Equal(t, "-s", command.args[1])
+}
+
+func TestCreateFromTextWithNoArguments(t *testing.T) {
+	command := NewTerminalCommandFromText("git")
+
+	assert.Equal(t, "git", command.command)
+	assert.Equal(t, 0, len(command.args))
+}
+
+func TestCreateFromTextWithNoCommandNorArguments(t *testing.T) {
+	command := NewTerminalCommandFromText("")
+
+	assert.Equal(t, "", command.command)
+	assert.Equal(t, 0, len(command.args))
+}
+
 func TestIsNotEqualWhenCommandIsNotTerminalCommand(t *testing.T) {
 	mockedRunner := func(command string, args []string) ([]byte, error) {
 		return []byte{}, nil

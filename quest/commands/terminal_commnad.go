@@ -12,6 +12,11 @@ type terminalCommand struct {
 	runCommand runCommand
 }
 
+func NewTerminalCommandFromText(wholeCommand string) terminalCommand {
+	splitCommand := strings.Split(wholeCommand, " ")
+	return NewTerminalCommand(splitCommand[0], splitCommand[1:])
+}
+
 func NewTerminalCommand(command string, args []string) terminalCommand {
 	runOnCommandLine := func (command string, args []string) ([]byte, error) {
 			return exec.Command(command, args...).CombinedOutput()
